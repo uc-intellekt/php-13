@@ -25,10 +25,13 @@ $arr = [
 // echo $arr['two'];
 
 $serverLangs = [
-    'php',
-    'python',
-    'ruby',
+    'PHP',
+    'Python',
 ];
+$serverLangs[] = 'JavaScript';
+unset($serverLangs[3]);
+// var_dump($serverLangs); die();
+
 $clientLangs = [
     'JavaScript',
 ];
@@ -37,21 +40,35 @@ $langs = [
     'server' => $serverLangs,
     'client' => $clientLangs,
 ];
+$langs['server'][] = 'Ruby';
 // var_dump($langs);
+// print_r($langs);
+// die;
 
 $countLangs = count($langs['server']);
 for ($i = 0; $i < $countLangs; $i++) { // $i++ === $i = $i + 1
     // echo $langs['server'][$i];
 }
 
-echo '<ul class="list">'."\n";
-foreach ($langs as $groupName => $langGroup) {
-    foreach ($langGroup as $lang) {
-        // echo '<li>';
-        // echo $lang;
-        // echo '</li>';
-        // echo '<li>' . $lang . '</li>';
-        echo "\t<li>{$lang}</li>\n";
-    }
-}
-echo '</ul>';
+// echo '<ul class="list">'."\n";
+// foreach ($langs as $groupName => $langGroup) {
+//     foreach ($langGroup as $lang) {
+//         // echo '<li>';
+//         // echo $lang;
+//         // echo '</li>';
+//         // echo '<li>' . $lang . '</li>';
+//         echo "\t<li>{$lang}</li>\n";
+//     }
+// }
+// echo '</ul>';
+
+// array_merge();
+?>
+
+<ul class="list">
+    <?php foreach ($langs as $groupName => $langGroup) : ?>
+        <?php foreach ($langGroup as $index => $lang) : ?>
+            <li<?php if ($index % 2 == 0) : ?> style="background-color: #DDD;"<?php endif ?>><?php echo $lang ?></li>
+        <?php endforeach ?>
+    <?php endforeach ?>
+</ul>
