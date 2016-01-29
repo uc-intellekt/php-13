@@ -50,7 +50,7 @@ for ($i = 0; $i < $countLangs; $i++) { // $i++ === $i = $i + 1
     // echo $langs['server'][$i];
 }
 
-// echo '<ul class="list">'."\n";
+// echo '<ul class="list">'.PHP_EOL;
 // foreach ($langs as $groupName => $langGroup) {
 //     foreach ($langGroup as $lang) {
 //         // echo '<li>';

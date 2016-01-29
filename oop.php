@@ -1,38 +1,9 @@
 <?php
 
-class User
-{
-    private $name = 'Guest';
+define('SECURITY', true);
 
-    public $surname;
-
-    public function getFullName()
-    {
-        return $this->name . ' ' . $this->surname;
-    }
-
-    public function hello($count = null)
-    {
-        if ($count === null) {
-            $count = rand(1, 10);
-        }
-
-        $o = str_repeat('o', $count);
-        $message = "Hell{$o} {$this->getFullName()}!";
-
-        return $message;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-}
+//include '...';
+require_once __DIR__ . '/src/User.php';
 
 $user = new User();
 // var_dump($user);
