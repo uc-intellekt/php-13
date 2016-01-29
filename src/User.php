@@ -6,9 +6,25 @@ if (!defined('SECURITY')) {
 
 class User
 {
-    private $name = 'Guest';
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    private static $count = 0;
+
+    private $name;
 
     public $surname;
+
+    public function __construct($name = 'Guest')
+    {
+        self::$count++; // self::$count = self::$count + 1;
+        $this->setName($name);
+    }
+
+    public static function getCount()
+    {
+        return self::$count;
+    }
 
     public function getFullName()
     {
