@@ -4,21 +4,40 @@ if (!defined('SECURITY')) {
     die('Direct access restricted!');
 }
 
-class User
+abstract class User implements RoleInterface
 {
+    use HelloTrait;
+
     const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
     private static $count = 0;
 
-    private $name;
+    protected $name;
 
     public $surname;
+
+    private $role;
 
     public function __construct($name = 'Guest')
     {
         self::$count++; // self::$count = self::$count + 1;
         $this->setName($name);
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 
     public static function getCount()
@@ -29,18 +48,6 @@ class User
     public function getFullName()
     {
         return $this->name . ' ' . $this->surname;
-    }
-
-    public function hello($count = null)
-    {
-        if ($count === null) {
-            $count = rand(1, 10);
-        }
-
-        $o = str_repeat('o', $count);
-        $message = "Hell{$o} {$this->getFullName()}!";
-
-        return $message;
     }
 
     public function getName()
