@@ -1,7 +1,11 @@
 <?php
 
+$text = 'qqq';
+
 function hello($name = 'Guest', $count = null)
 {
+//    global $text;
+
     if ($count === null) {
         $count = rand(1, 10);
     }
