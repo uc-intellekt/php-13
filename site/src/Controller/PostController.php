@@ -23,9 +23,11 @@ class PostController
 
         $post = $db->fetchAssoc("SELECT *
             FROM post
-            WHERE id = $id
+            WHERE id = :id
             LIMIT 1
-        ");
+        ", [
+            'id' => $id,
+        ]);
         var_dump($post); die;
     }
 }
