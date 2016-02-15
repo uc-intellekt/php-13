@@ -21,6 +21,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get('/', function() use($app) {
     return 'Welcome!';
@@ -28,8 +29,11 @@ $app->get('/', function() use($app) {
 $app->get('/hello/{userName}', function($userName) use($app) {
     return 'Hello '.$app->escape($userName);
 });
-$app->get('/blog', 'Controller\\PostController::indexAction');
+$app->get('/blog', 'Controller\\PostController::indexAction')
+    ->bind('post_index')
+;
 $app->get('/blog/{id}', 'Controller\\PostController::showAction')
+    ->bind('post_show')
     ->method('GET')
     ->assert('id', '[0-9]+')
 ;
