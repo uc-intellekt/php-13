@@ -9,15 +9,13 @@ class PostController
 {
     private $app;
 
-    public function init(App $app)
+    public function __construct(App $app)
     {
         $this->app = $app;
     }
 
-    public function indexAction(App $app)
+    public function indexAction()
     {
-        $this->init($app);
-
         $posts = $this->getDb()->fetchAll('SELECT * FROM post WHERE published = 1');
 
         return $this->getTwig()->render('post/index.twig', array(
@@ -25,9 +23,8 @@ class PostController
         ));
     }
 
-    public function showAction(App $app, $id)
+    public function showAction($id)
     {
-        $this->init($app);
         $id = (int)$id;
 
         $post = $this->getDb()->fetchAssoc("SELECT *
@@ -40,7 +37,7 @@ class PostController
             'id' => $id,
         ]);
         if (!$post) {
-            $app->abort(404, "Post $id does not exist.");
+            $this->app->abort(404, "Post $id does not exist.");
         }
 
         return $this->getTwig()->render('post/show.twig', array(
