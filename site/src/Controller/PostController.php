@@ -7,29 +7,30 @@ use Silex\Application as App;
 
 class PostController
 {
+    private $app;
+
+    public function init(App $app)
+    {
+        $this->app = $app;
+    }
+
     public function indexAction(App $app)
     {
-        /** @var Conn $db */
-        $db = $app['db'];
-        /** @var \Twig_Environment $twig */
-        $twig = $app['twig'];
+        $this->init($app);
 
-        $posts = $db->fetchAll('SELECT * FROM post WHERE published = 1');
+        $posts = $this->getDb()->fetchAll('SELECT * FROM post WHERE published = 1');
 
-        return $twig->render('post/index.twig', array(
+        return $this->getTwig()->render('post/index.twig', array(
             'posts' => $posts,
         ));
     }
 
     public function showAction(App $app, $id)
     {
+        $this->init($app);
         $id = (int)$id;
-        /** @var Conn $db */
-        $db = $app['db'];
-        /** @var \Twig_Environment $twig */
-        $twig = $app['twig'];
 
-        $post = $db->fetchAssoc("SELECT *
+        $post = $this->getDb()->fetchAssoc("SELECT *
             FROM post
             WHERE 1
                 AND id = :id
@@ -42,8 +43,24 @@ class PostController
             $app->abort(404, "Post $id does not exist.");
         }
 
-        return $twig->render('post/show.twig', array(
+        return $this->getTwig()->render('post/show.twig', array(
             'post' => $post,
         ));
+    }
+
+    /**
+     * @return Conn
+     */
+    private function getDb()
+    {
+        return $this->app['db'];
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    private function getTwig()
+    {
+        return $this->app['twig'];
     }
 }
