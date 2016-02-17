@@ -1,0 +1,18 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <h1>Blog</h1>
+    {% for post in posts %}
+        <div>
+            <a href="{{ path('post_show', {id: post.id}) }}">
+                {{ post.heading }}
+            </a>
+            |
+            <a href="{{ path('admin_post_edit', {id: post.id}) }}">
+                Изменить
+            </a>
+        </div>
+        <p>{{ post.created_at|date('m/d/Y') }}</p>
+    {% endfor %}
+{% endblock %}

@@ -23,6 +23,9 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app['post.controller'] = $app->share(function() use ($app) {
     return new \Controller\PostController($app);
 });
+$app['admin.post.controller'] = $app->share(function() use ($app) {
+    return new \Controller\Admin\PostController($app);
+});
 
 // Routes
 $app->get('/', function() use($app) {
@@ -36,6 +39,14 @@ $app->get('/blog', 'post.controller:indexAction')
 ;
 $app->get('/blog/{id}', 'post.controller:showAction')
     ->bind('post_show')
+    ->method('GET')
+    ->assert('id', '[0-9]+')
+;
+$app->get('/admin/blog', 'admin.post.controller:indexAction')
+    ->bind('admin_post_index')
+;
+$app->get('/admin/blog/edit/{id}', 'admin.post.controller:editAction')
+    ->bind('admin_post_edit')
     ->method('GET')
     ->assert('id', '[0-9]+')
 ;
