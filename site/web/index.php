@@ -1,7 +1,12 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../parameters.php';
+define('PARAMETER_PATH', __DIR__.'/../parameters.php');
+if (is_file(PARAMETER_PATH)) {
+    require_once PARAMETER_PATH;
+} else {
+    throw new RuntimeException('File with parameters not found!');
+}
 //require_once __DIR__.'/../src/Controller/PostController.php';
 
 use Silex\Application as App;
@@ -45,9 +50,13 @@ $app->get('/blog/{id}', 'post.controller:showAction')
 $app->get('/admin/blog', 'admin.post.controller:indexAction')
     ->bind('admin_post_index')
 ;
+$app->get('/admin/blog/new', 'admin.post.controller:newAction')
+    ->bind('admin_post_new')
+    ->method('GET|POST')
+;
 $app->get('/admin/blog/edit/{id}', 'admin.post.controller:editAction')
     ->bind('admin_post_edit')
-    ->method('GET')
+    ->method('GET|POST')
     ->assert('id', '[0-9]+')
 ;
 

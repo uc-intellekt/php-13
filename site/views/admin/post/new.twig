@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <form action="" method="POST">
+        <p>
+            <input type="text" name="heading" value="">
+        </p>
+        <p>
+            <textarea type="text" name="content"></textarea>
+        </p>
+        <input type="submit">
+    </form>
+{% endblock %}

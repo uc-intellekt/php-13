@@ -1,8 +1,16 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
     {{ parent() }}
-    <h1>{{ post.heading }}</h1>
-    <p>{{ post.created_at|date('m/d/Y') }}</p>
-    <p>{{ post.content }}</p>
+    <form action="" method="POST">
+        <p>
+            <input type="text" name="heading" value="{{ post.heading }}">
+        </p>
+        <p>
+            <textarea type="text" name="content">{{ post.content }}</textarea>
+        </p>
+        <input type="submit">
+    </form>
 {% endblock %}
